@@ -32,7 +32,7 @@ RPC is the program for controlling Radio Playing Daemon (RPD).
 
 Grab the 'now playing'-module:
 ```bash
-    $ git clone git://github.com/trapd00r/Mplayer-NowPlaying.git
+    $ git clone git@github.com:trapd00r/Mplayer-NowPlaying-Crappy.git Mplayer-NowPlaying
     $ cd Mplayer-NowPlaying
     $ perl Makefile.PL
     $ make
