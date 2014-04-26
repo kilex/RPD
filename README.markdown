@@ -44,6 +44,11 @@ Now you can install RPD and RPC:
     $ make
     # make install
 ```
+copy, edit channel list:
+```bash
+sudo cp channels.txt /etc/
+vim /etc/channels.txt
+```
 Start RPD and enjoy.
 #License
 

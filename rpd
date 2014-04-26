@@ -22,7 +22,7 @@ our $VERSION = 0.4;
 use strict;
 use RPD::URI qw(geturi listchans);
 
-my $chan = shift // 'moh'; # Masters of Hardcore
+my $chan = shift // 'default'; # Default station
 
 my $log      = "$ENV{HOME}/.mplayer/rpd.log";
 my $fifo     = "$ENV{HOME}/.mplayer/mplayer.fifo";
