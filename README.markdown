@@ -15,6 +15,7 @@ RPC is the program for controlling Radio Playing Daemon (RPD).
       np      show the currently playing song
       npi     show the currently playing song on one line
       play    play/switch to channel
+      random  switch to random channel
       list    list all available channels
       fav     add track to the favlist
       shfav   show favorites

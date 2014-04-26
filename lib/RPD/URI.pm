@@ -2,7 +2,7 @@ package RPD::URI;
 require Exporter;
 use YAML::Tiny;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(geturi listchans getchname getchans);
+@EXPORT_OK = qw(geturi listchans getchname getchans random_channel);
 
 our %channels;
 
@@ -28,6 +28,11 @@ sub getchname {
 
 sub getchans {
   return \%channels;
+}
+
+sub random_channel {
+	my $channel = (keys %channels)[rand keys %channels];
+	return $channel
 }
 
 sub listchans { #FIXME

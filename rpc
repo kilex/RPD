@@ -20,7 +20,7 @@ our $APP = 'Radio Playing Client';
 our $VERSION = 0.3;
 
 use strict;
-use RPD::URI qw(geturi listchans getchname);
+use RPD::URI qw(geturi listchans getchname random_channel);
 use Mplayer::NowPlaying qw(stream_np $np_log);
 use Data::Dumper;
 
@@ -31,8 +31,7 @@ my $log       = "$ENV{HOME}/.mplayer/rpd.log";
 my $favtracks = "$ENV{HOME}/.mplayer/rpd.fav";
 $np_log       = $log;
 my $rpd_pid   = '/tmp/rpd.pid';
-
-if(!(-f $rpd_pid)) {
+if((!(-f $rpd_pid))&&(!($action eq 'kill'))) {
   print "RPD is not running, starting...\n";
   system("rpd") == 0 or print "RPD could not start. $!\n";
   exit 0;
@@ -102,6 +101,22 @@ $options = {
       }
   },
 
+  random       => sub {
+    my $stream = undef;
+	$arg=random_channel();
+    if(!defined(geturi($arg))) {
+      $stream = $arg; # arbitary urls..
+    }
+    else {
+      $stream = geturi($arg);
+    }
+    fifo_w('loadfile', $stream);
+    print 'Playing: ', getchname($arg), "\n   From $stream\n";
+    #sleep 2;
+    $options->{np}->();
+
+    exit(0);
+  },
   play       => sub {
     my $stream = undef;
     if(!defined(geturi($arg))) {
@@ -111,8 +126,8 @@ $options = {
       $stream = geturi($arg);
     }
     fifo_w('loadfile', $stream);
-    #print 'Playing: ', getchname($arg), "\n   From $stream\n";
-    sleep 2;
+    print 'Playing: ', getchname($arg), "\n   From $stream\n";
+    #sleep 2;
     $options->{np}->();
 
     exit(0);
@@ -178,6 +193,7 @@ sub usage {
       np      show the currently playing song
       npi     show the currently playing song on one line
       play    play/switch to channel
+      random  switch to random channel
       list    list all available channels
       fav     add track to the favlist
       shfav   show favorites
